@@ -1,0 +1,21 @@
+.text{
+    margin-left: 220px;
+}
+ul{
+    top: -40px;
+    display: flex;
+    list-style-type: none;
+    position: relative;
+    margin-left: 26%;
+}
+li{
+    margin-right: 40px;
+}
+.contactlist{
+    color: black;
+    text-decoration: none;
+}
+.contactlist:hover{
+    color: black;
+    text-decoration: none;
+}
