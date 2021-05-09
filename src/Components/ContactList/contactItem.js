@@ -3,23 +3,25 @@ import ContactItem from "./ContactItem/contactItem";
 import { connect } from "react-redux";
 import { updateDatabase } from "../../Services/api-service";
 import { getAllContacts } from "../../Actions/ContactListActions";
+import Search from "../../Components/Search/search";
 
-const ContactList = ({List, searchList, valueSearch, getAllContacts}) => {
+const ContactList = ({ List, searchList, valueSearch, getAllContacts }) => {
 
     useEffect(() => {
+        console.log("searchList -> ", searchList)
         updateDatabase().then(data => {
             getAllContacts(data)
         })
     }, [])
 
-    const renderList = () =>{
-        if(searchList.length === 0 && valueSearch.length === 0) {
+    const renderList = () => {
+        if (searchList.length === 0 && valueSearch.length === 0) {
             return List.map(contact => {
                 return (
-                    <ContactItem key={contact.Id} {...contact} />
+                    <ContactItem key={contact.Id} {...contact}  />
                 )
             })
-        } 
+        }
         else if (searchList.length > 0) {
             return searchList.map(contact => {
                 return (
@@ -27,13 +29,15 @@ const ContactList = ({List, searchList, valueSearch, getAllContacts}) => {
                 )
             })
         }
-        else if(searchList.length === 0 && valueSearch.length > 0 ){
-           return <tr><td><h2>Contacts not found</h2></td></tr>;
+        else if (searchList.length === 0 && valueSearch.length > 0) {
+            return <tr><td><h2>Contacts not found</h2></td></tr>;
         }
     }
 
-    return(
+    return (
+    
         <Fragment>
+              <Search />
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12">
@@ -52,7 +56,7 @@ const ContactList = ({List, searchList, valueSearch, getAllContacts}) => {
                                     <tbody>
                                         {renderList()}
                                     </tbody>
-                                </table> 
+                                </table>
                             </div>
                         </div>
                     </div>

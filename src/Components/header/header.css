@@ -19,3 +19,12 @@ li{
     color: black;
     text-decoration: none;
 }
+.add-contact{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    color: black;
+    margin: 40px;
+    border: 1px black solid;
+    padding: 7px;
+}
+

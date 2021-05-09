@@ -1,4 +1,4 @@
-URL = "https://contacts-213d4-default-rtdb.firebaseio.com/List.json"
+URL = "https://contact-list-82b07-default-rtdb.firebaseio.com/List.json"
 
 export const updateDatabase = () => {
     const data = fetch(URL)
@@ -15,19 +15,19 @@ export const updateDatabase = () => {
             return err
         })
     return data;
-} 
+}
 
 export const saveData = (contactList) => {
     const response = fetch(URL, {
-      method: "PUT",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(contactList),
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contactList),
     }).then(response => {
         return response;
     }).catch(err => {
         return err;
     });
     return response;
-  }
+}

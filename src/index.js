@@ -5,8 +5,8 @@ import store from "./store";
 
 // Router
 import {
-  BrowserRouter as Router, 
-  Switch, 
+  BrowserRouter as Router,
+  Switch,
   Route
 } from "react-router-dom"
 import "./index.css";
@@ -20,20 +20,22 @@ import AddContact from "./Components/AddContact/addContact";
 import EditContact from "./Components/EditList/editContact";
 import Error404 from "./Components/Error404/error404";
 
+
 class App extends Component {
-  render(){
-    return(
-      <Provider store= {store}>
+  render() {
+    return (
+      <Provider store={store}>
         <Router>
-        <Header 
-        />
+          <Header>
+          </Header>
+
           <Switch>
-            <Route path = "/" exact component = {ContactList}></Route>
-            <Route path = "/add-contact" exact component= { AddContact }></Route>
-            <Route path = "/edit-contact" exact component= { EditContact }></Route>
+            <Route path="/" exact component={ContactList}></Route>
+            <Route path="/add-contact" exact component={AddContact}></Route>
+            <Route path="/edit-contact" exact component={EditContact}></Route>
             <Route path="" exact component={Error404} />
           </Switch>
-          <Footer/>
+          <Footer />
         </Router>
       </Provider>
     )

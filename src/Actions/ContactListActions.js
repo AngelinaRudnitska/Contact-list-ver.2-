@@ -1,4 +1,4 @@
-  
+
 export const getAllContacts = (contactList) => {
     return {
         type: "CONTACT_LIST_LOADED",
@@ -27,9 +27,17 @@ export const updateStatus = (contactList) => {
     }
 }
 
-export const searchContact = (name) =>{
-    return{
+export const searchContact = (name) => {
+    return {
         type: "SEARCH_CONTACT",
         payload: name
+    }
+}
+
+export const EditContact = (contact) => {
+    console.log("contactID -> ", contact);
+    return {
+        type: "EDIT_CONTACT",
+        payload: contact
     }
 }

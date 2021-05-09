@@ -1,9 +1,9 @@
 import React from "react";
 import "./contactItem.css";
-import {Link} from "react-router-dom";
-import {Redirect} from "react-router-dom";
-import {saveData} from "../../../Services/api-service";
-import { deleteContact, updateStatus } from "../../../Actions/ContactListActions";
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { saveData } from "../../../Services/api-service";
+import { deleteContact, updateStatus, EditContact } from "../../../Actions/ContactListActions";
 import { connect } from "react-redux";
 
 class ContactItem extends React.Component {
@@ -20,25 +20,37 @@ class ContactItem extends React.Component {
                 List: newList,
                 isRedirect: true
             })
-        }) 
+        })
     }
 
-    onStatusChange = () =>{
-        const contact = {...this.props};
+    onEditClick = () => {
+        const Id = this.props.Id;
+        const { List, EditContact } = this.props;
+        console.log("newList ", List);
+        console.log("Contact ID => ", Id)
+        const index = List.findIndex((elem) => elem.Id === Id);
+        const currentContact = List[index];
+        EditContact(currentContact);
+
+
+    }
+
+    onStatusChange = () => {
+        const contact = { ...this.props };
         const { List, updateStatus } = this.props;
         const newList = List.slice();
         const index = List.findIndex((elem) => elem.Id === contact.Id);
 
-        if (newList[index].Status === "Inactive"){
+        if (newList[index].Status === "Inactive") {
             newList[index].Status = "Active"
         }
-        else if (newList[index].Status === "Active"){
+        else if (newList[index].Status === "Active") {
             newList[index].Status = "Pending"
         }
-        else if (contact.Status === "Pending"){
+        else if (contact.Status === "Pending") {
             newList[index].Status = "Banned"
         }
-        else{
+        else {
             newList[index].Status = "Inactive"
         }
         updateStatus(newList);
@@ -46,33 +58,33 @@ class ContactItem extends React.Component {
             this.setState({
                 List: newList
             })
-        }) 
+        })
     }
 
-    render () {
+    render() {
         const { onEditClick } = this.props;
-        const {Avatar, Name, Created, Role, Status, Email, Gender} = this.props;
+        const { Id, Avatar, Name, Created, Role, Status, Email, Gender } = this.props;
         const URL = `https://randomuser.me/api/portraits/${Gender}/${Avatar}.jpg`;
         let statusStyle = "badge bg-secondary status";
-        switch(Status) {
+        switch (Status) {
             case 'Active': statusStyle = "badge bg-success status";
-            break;
+                break;
             case 'Banned': statusStyle = "badge bg-danger status";
-            break; 
+                break;
             case 'Pending': statusStyle = "badge bg-warning status";
-            break;
+                break;
             default: statusStyle = "badge bg-secondary status";
-          }          
+        }
 
         return (
             <tr>
                 <td>
-                    <img src={URL} alt=""/>
+                    <img src={URL} alt="" />
                     <a href="/#" className="user-link">{Name}</a>
                     <span className="user-subhead">{Role}</span>
                 </td>
                 <td className="text-center">
-                {Created}
+                    {Created}
                 </td>
                 <td className="text-center">
                     <span className={statusStyle} onClick={this.onStatusChange} >{Status}</span>
@@ -87,7 +99,7 @@ class ContactItem extends React.Component {
                             <i className="fa fa-search-plus fa-stack-1x fa-inverse"></i>
                         </span>
                     </a>
-                    <Link to="/edit-contact" className="table-link" onClick={onEditClick}>
+                    <Link to="/edit-contact" className="table-link" onClick={this.onEditClick}>
                         <span className="fa-stack">
                             <i className="fa fa-square fa-stack-2x"></i>
                             <i className="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -105,14 +117,15 @@ class ContactItem extends React.Component {
     }
 }
 
-const mapStateToProps  = ({ ContactListReducer }) => {
+const mapStateToProps = ({ ContactListReducer }) => {
     const { List } = ContactListReducer;
     return { List }
 }
 
 const mapDispatchToProps = {
     deleteContact,
-    updateStatus
+    updateStatus,
+    EditContact
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactItem);

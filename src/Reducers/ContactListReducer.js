@@ -1,7 +1,8 @@
 const initialState = {
     List: [],
     searchList: [],
-    valueSearch: ''
+    valueSearch: '',
+    currentContact: ""
 }
 
 const ContactListReducer = (state = initialState, action) => {
@@ -26,22 +27,28 @@ const ContactListReducer = (state = initialState, action) => {
             const searchNewList = state.searchList.filter((contact_item) => {
                 return contact_item.Id !== action.payload;
             });
-            return{
+            return {
                 ...state,
                 List: listAfterDelete,
                 searchList: searchNewList
             }
         case "UPDATE_STATUS":
-            return{
+            return {
                 ...state,
                 List: action.payload
+            }
+        case "EDIT_CONTACT":
+            console.log("EDIT =>", action.payload)
+            return {
+                ...state,
+                currentContact: action.payload
             }
         case "SEARCH_CONTACT":
             const tmpList = state.List.slice();
             let newList = tmpList.filter((item) => {
                 return item.Name.toLowerCase().indexOf(action.payload.toLowerCase()) > -1;
             });
-            
+
             if (newList.length === 0) {
                 return {
                     ...state,
@@ -61,3 +68,4 @@ const ContactListReducer = (state = initialState, action) => {
     }
 }
 export default ContactListReducer;
+
